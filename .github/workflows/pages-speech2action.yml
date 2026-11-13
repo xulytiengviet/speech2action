@@ -1,9 +1,10 @@
-name: Deploy Speech2Action Lab
+name: Deploy Speech2Action Chess Lab
 on:
   push:
     branches: [main]
     paths:
       - 'site/**'
+      - 'EXPERIMENT_CHESS.md'
       - '.github/workflows/pages-speech2action.yml'
   workflow_dispatch:
 permissions:
@@ -14,13 +15,24 @@ concurrency:
   group: speech2action-pages
   cancel-in-progress: true
 jobs:
-  deploy:
+  verify_and_deploy:
     runs-on: ubuntu-latest
-    environment: github-pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JS safety unit tests
+        run: |
+          node --test site/tests.mjs
+          node --check site/app.mjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
-      - uses: actions/deploy-pages@v4
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
