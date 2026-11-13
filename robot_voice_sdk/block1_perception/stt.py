@@ -1,4 +1,5 @@
 """Use EdgeVox's Vietnamese Sherpa-ONNX Zipformer STT, without fake confidence."""
+
 import wave
 from pathlib import Path
 
@@ -16,6 +17,7 @@ class EdgeVoxVietnameseSTT:
 
     def transcribe_wav(self, path: str) -> str:
         import numpy as np
+
         path = Path(path)
         with wave.open(str(path), "rb") as wav:
             if wav.getnchannels() != 1 or wav.getsampwidth() != 2 or wav.getframerate() != 16000:

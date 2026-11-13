@@ -1,4 +1,5 @@
 """Public SDK orchestrator. Only Block 2 can authorize Block 3."""
+
 import time
 
 from .block1_perception.intent import parse_text
@@ -14,8 +15,9 @@ class Speech2ActionSDK:
         self.gate = SafetyGate(threshold=threshold)
         self.events = []
 
-    def process_text(self, text: str, *, source: str = "typed",
-                     confidence=None, evidence: str = "uncalibrated") -> Result:
+    def process_text(
+        self, text: str, *, source: str = "typed", confidence=None, evidence: str = "uncalibrated"
+    ) -> Result:
         proposal = parse_text(text, source=source, confidence=confidence, evidence=evidence)
         return self.process_proposal(proposal)
 
@@ -34,6 +36,7 @@ class Speech2ActionSDK:
     def process_wav(self, path: str, *, stt=None, confidence=None, evidence="uncalibrated") -> Result:
         if stt is None:
             from .block1_perception.stt import EdgeVoxVietnameseSTT
+
             stt = EdgeVoxVietnameseSTT()
         transcript = stt.transcribe_wav(path)
         # EdgeVox returns a transcript, not a calibrated action confidence.

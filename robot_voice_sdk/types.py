@@ -1,4 +1,5 @@
 """Data contracts shared between perception, safety and execution."""
+
 from dataclasses import dataclass, field
 
 

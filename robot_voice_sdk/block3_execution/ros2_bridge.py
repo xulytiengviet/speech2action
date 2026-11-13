@@ -1,4 +1,5 @@
 """Simulation by default; explicit opt-in for bounded ROS2 cmd_vel pulses."""
+
 import math
 import threading
 import time

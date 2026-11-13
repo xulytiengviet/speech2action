@@ -1,4 +1,5 @@
 """Lazy VieNeu 1.2.4 synthesis adapter; no audio played automatically."""
+
 from pathlib import Path
 
 

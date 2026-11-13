@@ -1,4 +1,5 @@
 """Research regression for independent Python execution adapter."""
+
 import importlib.util
 import unittest
 
@@ -47,11 +48,15 @@ class TestChessSDK(unittest.TestCase):
 
     def test_source(self):
         self.assertEqual(self.sdk.run("e2e4", provenance="web_speech").reason, "UNVERIFIED_PERCEPTION")
-        self.assertEqual(self.sdk.run("e2e4", branch="B", provenance="recorded_audio", confidence=1).reason, "UNTRAINED_AUDIO_MODEL")
+        self.assertEqual(
+            self.sdk.run("e2e4", branch="B", provenance="recorded_audio", confidence=1).reason, "UNTRAINED_AUDIO_MODEL"
+        )
 
     def test_branch_b_synthetic(self):
-        self.assertEqual(self.sdk.run("e2e4", branch="B", provenance="synthetic", confidence=.82).reason, "LOW_CONFIDENCE")
-        self.assertTrue(self.sdk.run("e2e4", branch="B", provenance="synthetic", confidence=.94).approved)
+        self.assertEqual(
+            self.sdk.run("e2e4", branch="B", provenance="synthetic", confidence=0.82).reason, "LOW_CONFIDENCE"
+        )
+        self.assertTrue(self.sdk.run("e2e4", branch="B", provenance="synthetic", confidence=0.94).approved)
 
     def test_live_execution_disabled(self):
         self.sdk.simulation = False

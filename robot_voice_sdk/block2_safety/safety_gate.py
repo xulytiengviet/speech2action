@@ -1,4 +1,5 @@
 """Fail-closed rules executed BEFORE dispatch; no LLM may override these checks."""
+
 import math
 
 from robot_voice_sdk.block2_safety.lexicon import lookup, lookup_id
@@ -32,10 +33,13 @@ class SafetyGate:
             return Decision(False, spec.action_id, "UNTRUSTED_SOURCE")
         if proposal.source in {"stt", "classifier"} and proposal.evidence != "calibrated":
             return Decision(False, spec.action_id, "UNCALIBRATED_CONFIDENCE")
-        if (proposal.confidence is None or not isinstance(proposal.confidence, (int, float))
-                or isinstance(proposal.confidence, bool)
-                or not math.isfinite(proposal.confidence)
-                or not 0 <= proposal.confidence <= 1):
+        if (
+            proposal.confidence is None
+            or not isinstance(proposal.confidence, (int, float))
+            or isinstance(proposal.confidence, bool)
+            or not math.isfinite(proposal.confidence)
+            or not 0 <= proposal.confidence <= 1
+        ):
             return Decision(False, spec.action_id, "MISSING_OR_INVALID_CONFIDENCE")
         if proposal.confidence < self.threshold:
             return Decision(False, spec.action_id, "LOW_CONFIDENCE")

@@ -1,4 +1,5 @@
 """Exact-match Vietnamese command parser: no hallucinated or fuzzy action IDs."""
+
 from typing import ClassVar
 
 from robot_voice_sdk.block2_safety.lexicon import lookup
@@ -25,9 +26,12 @@ class NeuDecideProbe:
             "parameters": {"type": "object", "properties": {}},
         }
         for name, description in [
-            ("stop", "Stop immediately"), ("moveForward", "Move forward"),
-            ("moveBack", "Move backward"), ("turnLeft", "Turn left"),
-            ("turnRight", "Turn right"), ("grasp", "Grasp an object"),
+            ("stop", "Stop immediately"),
+            ("moveForward", "Move forward"),
+            ("moveBack", "Move backward"),
+            ("turnLeft", "Turn left"),
+            ("turnRight", "Turn right"),
+            ("grasp", "Grasp an object"),
         ]
     ]
 

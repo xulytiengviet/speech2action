@@ -5,6 +5,7 @@ pyproject.toml and shares the domain invariants with site/core.mjs.
 
 Not an interface to robot motors. No neural model/ESP32 inference is claimed.
 """
+
 from __future__ import annotations
 
 import math
@@ -16,8 +17,17 @@ POLICY_VERSION = 1
 THRESHOLD = 0.85
 
 PIECE_NAMES = {
-    "tốt": "p", "tot": "p", "mã": "n", "ma": "n", "ngựa": "n",
-    "tượng": "b", "tuong": "b", "xe": "r", "hậu": "q", "hau": "q", "vua": "k",
+    "tốt": "p",
+    "tot": "p",
+    "mã": "n",
+    "ma": "n",
+    "ngựa": "n",
+    "tượng": "b",
+    "tuong": "b",
+    "xe": "r",
+    "hậu": "q",
+    "hau": "q",
+    "vua": "k",
 }
 _PIECE_RE = "|".join(map(re.escape, PIECE_NAMES))
 _GRAMMAR = re.compile(
@@ -65,14 +75,26 @@ class ChessActionSDK:
         self.estop_latched = False
         return True
 
-    def _result(self, approved: bool, reason: str, initial: str,
-                execution: str = "NO_OP", uci: str | None = None,
-                san: str | None = None) -> ChessDecision:
+    def _result(
+        self,
+        approved: bool,
+        reason: str,
+        initial: str,
+        execution: str = "NO_OP",
+        uci: str | None = None,
+        san: str | None = None,
+    ) -> ChessDecision:
         return ChessDecision(approved, reason, execution, initial, self.board.fen(), uci, san)
 
-    def run(self, command: str, *, branch: str = "A",
-            provenance: str = "exact_typed_text",
-            confidence: float | None = None, policy_version: int = POLICY_VERSION) -> ChessDecision:
+    def run(
+        self,
+        command: str,
+        *,
+        branch: str = "A",
+        provenance: str = "exact_typed_text",
+        confidence: float | None = None,
+        policy_version: int = POLICY_VERSION,
+    ) -> ChessDecision:
         initial = self.board.fen()
         text = unicodedata.normalize("NFC", str(command)).lower().strip()
         text = re.sub(r"\s+", " ", text).rstrip(".!?").strip()
@@ -100,9 +122,14 @@ class ChessActionSDK:
         if branch == "B":
             if provenance != "synthetic":
                 return self._result(False, "UNTRAINED_AUDIO_MODEL", initial)
-            if (confidence is None or isinstance(confidence, bool)
-                    or not isinstance(confidence, (float, int))
-                    or not math.isfinite(confidence) or confidence < 0 or confidence > 1):
+            if (
+                confidence is None
+                or isinstance(confidence, bool)
+                or not isinstance(confidence, (float, int))
+                or not math.isfinite(confidence)
+                or confidence < 0
+                or confidence > 1
+            ):
                 return self._result(False, "INVALID_CONFIDENCE", initial)
             if confidence < THRESHOLD:
                 return self._result(False, "LOW_CONFIDENCE", initial)
