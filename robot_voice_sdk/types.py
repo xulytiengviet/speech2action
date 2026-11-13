@@ -1,13 +1,12 @@
 """Data contracts shared between perception, safety and execution."""
 from dataclasses import dataclass, field
-from typing import Optional
 
 
 @dataclass(frozen=True)
 class Proposal:
-    action_id: Optional[int]
+    action_id: int | None
     transcript: str
-    confidence: Optional[float] = None
+    confidence: float | None = None
     source: str = "stt"
     evidence: str = "uncalibrated"
 
@@ -25,7 +24,7 @@ class RobotState:
 @dataclass(frozen=True)
 class Decision:
     approved: bool
-    action_id: Optional[int]
+    action_id: int | None
     reason: str
     action_name: str = "NO_OP"
 

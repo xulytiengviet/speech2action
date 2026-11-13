@@ -7,10 +7,10 @@ Not an interface to robot motors. No neural model/ESP32 inference is claimed.
 """
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
 import math
 import re
 import unicodedata
+from dataclasses import asdict, dataclass
 
 POLICY_VERSION = 1
 THRESHOLD = 0.85

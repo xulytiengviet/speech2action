@@ -1,7 +1,7 @@
 """Small audited whitelist. CVNSS labels below are illustrative keys, NOT a full codec."""
-from dataclasses import dataclass
-import unicodedata
 import re
+import unicodedata
+from dataclasses import dataclass
 
 
 @dataclass(frozen=True)

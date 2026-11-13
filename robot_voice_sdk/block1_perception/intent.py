@@ -1,4 +1,6 @@
 """Exact-match Vietnamese command parser: no hallucinated or fuzzy action IDs."""
+from typing import ClassVar
+
 from robot_voice_sdk.block2_safety.lexicon import lookup
 
 
@@ -16,7 +18,7 @@ def parse_text(text: str, *, source: str = "typed", confidence=None, evidence: s
 class NeuDecideProbe:
     """Research-only English waveform-to-tool diagnostics; NEVER authorized actuation."""
 
-    TOOLS = [
+    TOOLS: ClassVar[list[dict[str, object]]] = [
         {
             "name": name,
             "description": description,
