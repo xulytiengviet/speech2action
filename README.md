@@ -1,3 +1,15 @@
+# Speech2Action — Vietnamese speech-to-verified robot actions
+
+**[Mở phòng thí nghiệm cờ vua và ESP32-S3 ảo](https://xulytiengviet.github.io/speech2action/)** · [Mã nguồn Chess Lab](site/) · [Phương pháp thực nghiệm](EXPERIMENT_CHESS.md)
+
+Speech2Action extends the original EdgeVox framework with a Vietnamese command-to-typed-action research lab, a shared deterministic safety policy, and a browser chess experiment inspired by RookApp. **The browser is a virtual constrained device, not real ESP32-S3 firmware emulation.** The embedded original EdgeVox sources and attribution below are retained.
+
+Start tests: `node --test site/tests.mjs` and `python -m unittest discover -s tests -p test_robot_voice_sdk.py -v`.
+
+---
+
+## Original EdgeVox upstream README
+
 # EdgeVox
 
 **Offline voice agent framework for robots and desktop apps.**
