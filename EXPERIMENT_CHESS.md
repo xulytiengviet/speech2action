@@ -48,3 +48,30 @@ python -m unittest discover -s tests -p test_robot_voice_sdk.py -v
 - EdgeVox / RookApp: nrl-ai/edgevox (MIT). The original desktop program is separate.
 - chess.js 1.4.0: Jeff Hlywa, BSD-2-Clause; loaded from a pinned public CDN. Full chess validation requires this module to load.
 - Stockfish: GPL; not embedded in the browser demo. Browser opponent is a simple own-code heuristic.
+
+
+## Python domain adapter (same fail-closed contract)
+
+The repository also provides `robot_voice_sdk/chess_adapter.py`, a deterministic chess
+simulator driven by the `python-chess` rules library. It does **not** expose
+GPIO, ROS2 motors, or a live hardware transport. This independent backend tests
+whether the browser command vocabulary and the host SDK enforce the same rules.
+
+```sh
+python -m pip install "python-chess>=1.999"
+python -m unittest tests.test_chess_adapter -v
+```
+
+```python
+from robot_voice_sdk.chess_adapter import ChessActionSDK
+
+sdk = ChessActionSDK()
+approved = sdk.run("đi tốt e2 đến e4")
+print(approved.jsonable())  # approved=True, san=e4
+rejected = sdk.run("không đi e7e5")  # NO_OP, rejected
+print(rejected.jsonable())
+```
+
+In the browser, the opponent is a deterministic material heuristic, whereas in
+the original EdgeVox RookApp chess robot the Stockfish engine runs in a separate
+native process. Do not conflate their playing strengths or benchmarks.
