@@ -1,0 +1,23 @@
+name: Speech2Action Chess Python SDK tests
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'robot_voice_sdk/chess_adapter.py'
+      - 'tests/test_chess_adapter.py'
+      - '.github/workflows/chess-sdk-tests.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test_python_chess:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install chess rules dependency
+        run: python -m pip install 'python-chess>=1.999'
+      - name: Run chess policy tests
+        run: python -m unittest discover -s tests -p test_chess_adapter.py -v
