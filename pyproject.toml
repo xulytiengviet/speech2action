@@ -113,7 +113,7 @@ dev = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["edgevox*"]
+include = ["edgevox*", "robot_voice_sdk*"]
 
 [tool.setuptools.package-data]
 edgevox = ["py.typed"]
@@ -126,11 +126,13 @@ edgevox-setup = "edgevox.setup_models:main"
 edgevox-serve = "edgevox.server.main:main"
 edgevox-agent = "edgevox.examples.agents.cli:main"
 edgevox-chess-robot = "edgevox.apps.chess_robot_qt.main:main"
+speech2action = "robot_voice_sdk.__main__:main"
 
 [project.urls]
-Homepage = "https://github.com/nrl-ai/edgevox"
-Documentation = "https://edgevox.nrl.ai"
-Issues = "https://github.com/nrl-ai/edgevox/issues"
+Homepage = "https://github.com/xulytiengviet/speech2action"
+Documentation = "https://xulytiengviet.github.io/speech2action/"
+Issues = "https://github.com/xulytiengviet/speech2action/issues"
+Upstream = "https://github.com/nrl-ai/edgevox"
 
 [tool.ruff]
 target-version = "py310"
